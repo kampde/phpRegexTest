@@ -1,0 +1,14 @@
+.match {
+	color: #f00;
+}
+
+.error {
+	color: #f00;
+	font-weight: bold;
+	font-size: 0.8em;
+	text-decoration: italic;
+}
+
+pre {
+	border: solid 1px #000;
+}
