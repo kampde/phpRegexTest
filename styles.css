@@ -1,5 +1,7 @@
 .match {
-	color: #f00;
+	border: solid 1px #f00;
+	padding: 0 0.2em;
+	background-color: #fcc;
 }
 
 .error {
@@ -11,4 +13,5 @@
 
 pre {
 	border: solid 1px #000;
+	padding: 0.5em;
 }
