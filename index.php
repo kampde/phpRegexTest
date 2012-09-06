@@ -38,10 +38,8 @@ if (isset($_GET['expr'])) {
 		$error = "ERROR: regex " . htmlspecialchars($expr, ENT_QUOTES, 'utf-8') . " is invalid";
 	} else {
 		$output = "";
-		foreach (file($file) as $k => $line) {
-			if (preg_match($expr, $line, $matches)) {
-				$output .= preg_replace_callback($expr, 'highlight_match', $line);
-			}
+		foreach(preg_grep($expr, file($file)) as $matchLine) {
+			$output .= preg_replace_callback($expr, 'highlight_match', $matchLine);
 		}
 	}
 }
