@@ -26,7 +26,7 @@ $files = array_filter(scandir(SAMPLES_DIR), function($elem) {
 if (!empty($_GET['file']) && in_array($_GET['file'], $files) === true) {
     $file = $_GET['file'];
 } else {
-    $file = $files[0];
+    $file = current($files);
 }
 if (isset($_GET['js'])) {
     // ajax call, just return the file
