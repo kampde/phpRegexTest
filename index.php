@@ -1,5 +1,17 @@
 <?php
 define('SAMPLES_DIR', 'samples');
+/*
+if (isset($_GET['l'])) {
+	$locale = 'ca_ES.utf8';
+} else {
+	$locale = 'en_US.utf8';
+}
+if (($newLocale = setlocale(LC_ALL, $locale)) === false) {
+	echo "Failed to set locale to $locale<br />\n";
+} else {
+	//echo "Testing locale $newLocale<br />\n";
+}
+*/
 function is_valid_regex($e) {
 	return @preg_match($e, "") !== false;
 }
