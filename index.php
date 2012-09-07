@@ -55,6 +55,12 @@ $showMatches = '';
 if (isset($_GET['showMatches'])) {
     $showMatches = ' checked="checked"';
 }
+$p_m_all = '';
+$preg_match = 'preg_match';
+if (isset($_GET['p_m_all'])) {
+    $p_m_all = ' checked="checked"';
+    $preg_match = 'preg_match_all';
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -82,7 +88,16 @@ if (isset($_GET['showMatches'])) {
                     <label>Regex to test: <input type="text" name="expr" value="<?php if (isset($expr)) echo htmlspecialchars($expr, ENT_QUOTES, 'utf-8');?>"/></label>
                     <?php if (isset($error)) echo "<em class='error'>$error</em>\n";?>
                 </div>
-                <div><label>Show $matches <input type="checkbox" name="showMatches" value="1"<?php echo $showMatches;?>/></label></div>
+                <div>
+                    <label>
+                        <input type="checkbox" name="showMatches" value="1"<?php echo $showMatches;?>/>
+                            Show $matches
+                    </label>
+                    <label>
+                        (<input type="checkbox" name="p_m_all" value="1"<?php echo $p_m_all;?>/>
+                        Using <code>preg_match_all</code> instead of <code>preg_match</code>)
+                    </label>
+                </div>
                 <input type="submit" value="Test Regex" />
             </fieldset>
 		</form>
@@ -95,7 +110,7 @@ if (!empty($output)) {
     if ($showMatches) {
         echo "<h2>\$matches array</h2>\n";
         foreach ($matchedLines as $matchLine) {
-            preg_match($expr, $matchLine, $matches);
+            $preg_match($expr, $matchLine, $matches);
             echo "<h3>For line '<em class='code'>" . rtrim($matchLine, "\n") . "</em>'</h3>\n";
             echo "<pre>"; var_dump($matches); echo "</pre>\n";
         }
