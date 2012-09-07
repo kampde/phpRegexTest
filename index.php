@@ -1,4 +1,5 @@
 <?php
+define('SAMPLES_DIR', 'samples');
 function is_valid_regex($e) {
 	return @preg_match($e, "") !== false;
 }
@@ -22,14 +23,20 @@ function showFileSelectOptions($files, $selected) {
     }
 }
 
-$files = array(
-    'test_regex.txt',
-    'styles.css',
-);
-if (!empty($_GET['file']) && in_array($_GET['file'], $files) === true && file_exists('./' . $_GET['file'])) {
+$files = array_filter(scandir(SAMPLES_DIR), function($elem) {
+    return $elem[0] != '.';
+});
+
+if (!empty($_GET['file']) && in_array($_GET['file'], $files) === true) {
     $file = $_GET['file'];
 } else {
     $file = $files[0];
+}
+if (isset($_GET['js'])) {
+    // ajax call, just return the file
+    header('Content-Type: text/plain; charset=utf-8');
+    readfile(SAMPLES_DIR . "/$file");
+    die();
 }
 if (isset($_GET['expr'])) {
 	$expr = $_GET['expr'];
@@ -38,7 +45,7 @@ if (isset($_GET['expr'])) {
 		$error = "ERROR: regex " . htmlspecialchars($expr, ENT_QUOTES, 'utf-8') . " is invalid";
 	} else {
 		$output = "";
-		foreach(($matchedLines = preg_grep($expr, file($file))) as $matchLine) {
+		foreach(($matchedLines = preg_grep($expr, file(SAMPLES_DIR . "/$file"))) as $matchLine) {
 			$output .= preg_replace_callback($expr, 'highlight_match', $matchLine);
 		}
 	}
@@ -54,14 +61,14 @@ if (isset($_GET['showMatches'])) {
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 		<title>Testing regular expressions</title>
-		<link rel="stylesheet" href="styles.css"/>
+		<link rel="stylesheet" href="<?php echo SAMPLES_DIR;?>/styles.css"/>
         <script type="text/javascript" src="jquery-1.8.1.min.js"></script>
         <script type="text/javascript" src="behaviour.js"></script>
 	</head>
 	<body>
 		<h1>Test your regular expression</h1>
 		<h2>Sample input</h2>
-		<pre id="sampleInput"><?php echo htmlspecialchars(file_get_contents($file), ENT_QUOTES, 'utf-8');?></pre>
+		<pre id="sampleInput"><?php echo htmlspecialchars(file_get_contents(SAMPLES_DIR . "/$file"), ENT_QUOTES, 'utf-8');?></pre>
 		<form method="get" action="">
             <fieldset>
                 <div>

@@ -1,7 +1,7 @@
 function myonready() {
 	$('#file').change(function() {
 		var f = $(this).val();
-		$.get(f, function(response) {
+		$.get('?js=1&file=' + encodeURIComponent(f), function(response) {
 			$('#sampleInput').text(response);
 		});
 	});
