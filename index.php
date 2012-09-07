@@ -4,10 +4,6 @@ function is_valid_regex($e) {
 	return @preg_match($e, "") !== false;
 }
 
-function highlight_match($matches) {
-	return '[match]' . $matches[0] . '[/match]';
-}
-
 function show_output($out) {
 	return preg_replace('@\[match\](.*)\[/match\]@Us', '<em class="match">\1</em>', htmlspecialchars($out, ENT_QUOTES, 'utf-8'));
 }
@@ -46,7 +42,7 @@ if (isset($_GET['expr'])) {
 	} else {
 		$output = "";
 		foreach(($matchedLines = preg_grep($expr, file(SAMPLES_DIR . "/$file"))) as $matchLine) {
-			$output .= preg_replace_callback($expr, 'highlight_match', $matchLine);
+			$output .= preg_replace($expr, '[match]\0[/match]', $matchLine);
 		}
 	}
 }
