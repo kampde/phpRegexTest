@@ -5,7 +5,7 @@ function is_valid_regex($e) {
 }
 
 function highlight_match($matches) {
-	return '[match]' . htmlspecialchars($matches[0], ENT_QUOTES, 'utf-8') . '[/match]';
+	return '[match]' . $matches[0] . '[/match]';
 }
 
 function show_output($out) {
