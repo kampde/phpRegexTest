@@ -9,7 +9,7 @@ function highlight_match($matches) {
 }
 
 function show_output($out) {
-	return preg_replace('@\[match\](.*)\[/match\]@U', '<em class="match">\1</em>', htmlspecialchars($out, ENT_QUOTES, 'utf-8'));
+	return preg_replace('@\[match\](.*)\[/match\]@Us', '<em class="match">\1</em>', htmlspecialchars($out, ENT_QUOTES, 'utf-8'));
 }
 
 function showFileSelectOptions($files, $selected) {
